@@ -36,3 +36,10 @@ tr:hover {
     padding: 10px; /* Less padding on smaller screens */
   }
 }
+
+.light{
+  background-color: antiquewhite;
+}
+.dark{
+background-color: black;
+}

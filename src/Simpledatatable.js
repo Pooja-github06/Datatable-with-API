@@ -1,52 +1,47 @@
-import react,{useEffect,useState} from 'react';
-import "./style.css";
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useTheme } from './ThemeContext'; // Import the custom hook
 
-const Simpledatatable=()=>{
+const SimpleDataTable = () => {
+    const [data, setData] = useState([]);
+    const { theme, toggleTheme } = useTheme(); // Use theme context
 
-    const [data,setData]=useState([]);
-    
-    useEffect(()=>{
-  const fetchdata=async ()=>{
-    try{
-  const response=await axios.get('https://api.restful-api.dev/objects');
-  setData(response.data);
-    }catch(err){
-  console.log(err)
-    }
-  }
-  fetchdata();
-     
-  
-    },[])
-    return(
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('https://api.restful-api.dev/objects');
+                setData(response.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchData();
+    }, []);
 
-        
-        <div>
-      <h4>Datatable with API</h4>
- <table>
-<thead>
-  <tr>
-    <th>ID</th>
-    <th>Name</th>
-  </tr>
-</thead>
-<tbody>
-  {data.map((item,index)=>
-    <tr>
-      <td>{item.id}</td>
-      <td>{item.name }</td>
+    return (
+        <div className={theme} style={{ padding: "20px" }}>
+            <h4>DataTable with API</h4>
+            <button onClick={toggleTheme}>
+                Switch to {theme === "light" ? "Dark" : "Light"} Theme
+            </button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.map((item) => (
+                        <tr key={item.id}>
+                            <td>{item.id}</td>
+                            <td>{item.name}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+};
 
-    </tr>
-  )}
-</tbody>
-
- </table>
-    
-   
-    </div>
-    
-    )
-}
-
-export default Simpledatatable;
+export default SimpleDataTable;
