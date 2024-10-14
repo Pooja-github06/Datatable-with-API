@@ -5,6 +5,7 @@ import axios from 'axios';
 const Simpledatatable=()=>{
 
     const [data,setData]=useState([]);
+    
     useEffect(()=>{
   const fetchdata=async ()=>{
     try{
